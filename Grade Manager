@@ -1,0 +1,98 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class GradeManager {
+
+    // Method to calculate the average grade
+    private static double calculateAverage(ArrayList<Double> grades) {
+        double sum = 0;
+        for (double grade : grades) {
+            sum += grade;
+        }
+        return sum / grades.size();
+    }
+
+    // Method to determine the letter grade
+    private static String getLetterGrade(double average) {
+        if (average >= 90) {
+            return "A";
+        } else if (average >= 80) {
+            return "B";
+        } else if (average >= 70) {
+            return "C";
+        } else if (average >= 60) {
+            return "D";
+        } else {
+            return "F";
+        }
+    }
+
+    // Method to determine the GPA based on letter grade
+    private static double getGPA(String letterGrade) {
+        switch (letterGrade) {
+            case "A":
+                return 4.0;
+            case "B":
+                return 3.0;
+            case "C":
+                return 2.0;
+            case "D":
+                return 1.0;
+            case "F":
+                return 0.0;
+            default:
+                return 0.0;
+        }
+    }
+
+    public static void main(String[] args) {
+        // Create a Scanner object to read user input
+        Scanner scanner = new Scanner(System.in);
+
+        // Create a list to store grades
+        ArrayList<Double> grades = new ArrayList<>();
+
+        // Input loop
+        while (true) {
+            // Prompt the user to enter a grade
+            System.out.print("Enter a grade (or type 'done' to finish): ");
+            String input = scanner.nextLine();
+
+            // Check if the user wants to finish input
+            if (input.equalsIgnoreCase("done")) {
+                break;
+            }
+
+            try {
+                // Parse the input to a double
+                double grade = Double.parseDouble(input);
+                // Add the grade to the list
+                grades.add(grade);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a numeric value.");
+            }
+        }
+
+        // Check if any grades were entered
+        if (grades.isEmpty()) {
+            System.out.println("No grades entered. Exiting program.");
+            scanner.close();
+            return;
+        }
+
+        // Calculate the average grade
+        double average = calculateAverage(grades);
+
+        // Determine the letter grade and GPA
+        String letterGrade = getLetterGrade(average);
+        double gpa = getGPA(letterGrade);
+
+        // Display the results
+        System.out.println("Average Grade: " + average);
+        System.out.println("Letter Grade: " + letterGrade);
+        System.out.println("GPA: " + gpa);
+
+        // Close the scanner
+        scanner.close();
+    }
+}
